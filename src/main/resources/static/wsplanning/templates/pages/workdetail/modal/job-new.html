@@ -1,0 +1,120 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$ctrl.cancel()">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">{{'btnClose' | translate}}</span>
+    </button>
+    <h4>{{title}}</h4>
+</div>
+
+<div class="modal-body">
+    <div class="panel panel-flat">
+        <div class="panel-body">
+            <div class="well border-left-danger border-left-lg jobnew">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="panel panel-flat">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title" ng-hide="jobChecked.MainGroup == ''"><span
+                                                style="color: red">{{jobChecked.MainGroup}}/{{jobChecked.SubGroup}}</span>
+                                        </h5>
+                                    </div>
+                                    <div class="panel-body">
+
+                                        <div class="div-tree">
+                                            <ul class="tree-level" ng-repeat="item in jobTreeList track by $index">
+                                                <li>
+                                                    <a ng-click="collapseMenu(item)"><span>{{item.label}}</span></a>
+                                                    <ul ng-show="item.selected == true" class=""
+                                                        ng-repeat="sub in item.SubGroups as listSub">
+                                                        <li class="">
+                                                            <a ng-click="recentSales(sub, item.label, item.id)">
+                                                                <span>{{sub.Name}}</span></a>
+
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-8 col-sm-8">
+                        <div ng-include="'/wsplanning/templates/pages/workdetail/modal/additional_data.html'">
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-8 col-sm-8">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div ng-include="'/wsplanning/templates/pages/workdetail/modal/recent_sales.html'">
+                                </div>
+
+                                <!-- <div ng-include="'/wsplanning/templates/pages/workdetail/modal/recent_sales.html'"></div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4">
+                        <div class="row" ng-hide="historicalData == null || historicalData.length === 0">
+                            <div class="panel panel-flat">
+                                <div class="panel-heading">
+                                    <h5 class="panel-title"><span>{{'SelectedItem' | translate}}</span></h5>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="table-responsive nowhitespace" style="height: 200px;">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">{{'No' | translate}}</th>
+                                                    <th class="text-center">{{'CodeName' | translate}}</th>
+                                                    <!-- <th class="text-center">Name</th> -->
+                                                    <th class="text-center">{{'Quantity' | translate}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in historicalData track by $index">
+                                                    <th class="text-center">{{$index + 1}}</th>
+                                                    <th class="">{{item.ItemNo}} - {{item.Name}}</th>
+                                                    <!-- <th class="text-left">{{item.Name}}</th> -->
+                                                    <th class="text-center">{{item.Quantity}}</th>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="panel-footer text-right">
+
+
+                                </div> -->
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer position-right">
+    <button type="button" ng-click="save()" ng-disabled="disabledButton == true"
+        class="btn btn-icon btn-primary btnSubmit">
+        <i class="icon-checkmark3"></i>{{ 'btnSave' | translate }}</span>
+    </button>
+    <a class="btn btn-default" ng-click="$ctrl.cancel()">{{ 'btnCancel' | translate }}</a>
+</div>

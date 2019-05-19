@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="$ctrl.cancel()"
+        aria-hidden="true">&times;</button>
+    <h4 class="modal-title">{{'PhotoTitle' | translate}}</h4>
+</div>
+<div class="modal-body">
+    <div class="">
+        <div class="row">
+            <div class="col-md-9 col-sm-9 tableModal">
+                <div ng-show="isGrid" id="div-photo" class="col-md-3 col-sm-4 div-photo text-center thumb "
+                    ng-repeat="photo in lstphoto track by $index">
+                    <a ng-click="openPhoto($index)" data-toggle="modal"><img ng-src="{{photo}}" alt=""
+                            class="img-thumbnail photo" data-target="#image-gallery" /></a>
+
+                </div>
+                <ul ng-show="!isGrid" class="list">
+                    <li ng-repeat="photo in lstphoto track by $index">
+                        <div class="outside-image">
+                            <a href="" class="inner" ng-click="openPhoto($index)">
+                                <div>
+                                    <img ng-src="{{photo}}" alt="" class="img-thumbnail" data-target="#image-gallery" />
+                                </div>
+                            </a>
+                            <button style="left:23px;top:3px" type="button" ng-click="removePhoto($index)"
+                                class="btn btn-primary btn-icon btn-rounded"><i class=" icon-cross2"></i></button>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <div class="row">
+                    <a type="button" class="btn btn-default" ng-click="getClass(1)"><i class="icon-list"></i></a>
+                    <a type="button" class="btn btn-default" ng-click="getClass(2)"><i class="icon-grid"></i></a>
+                </div>
+                <div class="row">
+                    <input type="file" id="photo-file" class="btn btn-default" multiple ng-files="getTheFiles($files)"
+                        style="width:100%" />
+                    <table>
+                        <tr ng-repeat="file in lstfiles track by $index">
+                            <td>{{$index+1}}</td>
+                            <td>{{file.name}}</td>
+                            <td>{{file.msg}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <div class="pull-left">
+        <button type="button" class="btn btn-default" ng-click="takeScreenshot()">{{'btnCam'|translate}}</button>
+    </div>
+    <div class="pull-right">
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.save()">{{'btnSave'|translate}}</button>
+        <button type="button" class="btn btn-default" ng-click="$ctrl.cancel()"
+            data-dismiss="modal">{{'btnCancel'|translate}}</button>
+    </div>
+</div>

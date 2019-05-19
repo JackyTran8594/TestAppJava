@@ -1,0 +1,55 @@
+<!-- Basic panel controls -->
+<div class="panel panel-white" ng-controller="CustomerCtrl">
+    <span ng-show="!isShow">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <a class="btn btn-link btn-float has-text text-size-small" ng-click="$ctrl.openSearchCustomer('full','')"  style="float: left;">
+                    <i class="icon-user position-left myTitle"></i>
+                </a>
+                <small class="myTitle" style="margin-left: 0px;">
+                    {{WOCustomer.CustNo}}, {{WOCustomer.LName}}, {{WOCustomer.FName}}, <a style="cursor: pointer;color: #371ace;" href="tel:{{WOCustomer.Tel1}}">{{WOCustomer.Tel1}}</a>, {{WOCustomer.Email}}<br/>
+                    {{WOCustomer.PostalCode}}, {{WOCustomer.City}}, {{WOCustomer.Address}}
+                </small>
+            </h6>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li ng-click="toogleVehicle()"><a ng-class="{'rotate-180': isShow == true}" data-action="collapse" data-popup="tooltip" title="Collapse"></a></li>
+                </ul>
+            </div>
+        </div>
+    </span>
+
+    <span ng-show="isShow">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <a class="btn btn-link btn-float has-text text-size-small" ng-click="$ctrl.openSearchCustomer('full','')"  style="float: left;">
+                    <i class="icon-user position-left myTitle"></i>
+                </a>
+                <small class="myTitle" style="margin-left: 0px;">
+                    {{WOCustomer.CustNo}}, {{WOCustomer.LName}}, {{WOCustomer.FName}}, <a style="cursor: pointer;color: #371ace;" href="tel:{{WOCustomer.Tel1}}">{{WOCustomer.Tel1}}</a>, {{WOCustomer.Email}}<br/>
+                    {{WOCustomer.PostalCode}}, {{WOCustomer.City}}, {{WOCustomer.Address}}
+                </small>
+            </h6>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li ng-click="toogleVehicle()"><a ng-class="{'rotate-180': isShow == true}" data-action="collapse" data-popup="tooltip" title="Collapse"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <form class="form-horizontal formValidate" name="contractFrm">
+                <div ng-repeat="item in WOCustomer.DynamicDataFields" class="col-xs-6">
+                    <div class="form-group">
+                        <label class="control-label col-xs-4">{{ item.Label }}</label>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" id="label_customer_{{$index}}"  ng-model="item.Value" ng-disabled="true">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </span>
+</div>
+<!-- /basic panel controls -->

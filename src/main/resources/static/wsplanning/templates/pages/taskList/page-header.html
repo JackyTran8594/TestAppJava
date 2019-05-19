@@ -1,0 +1,30 @@
+<!-- Page header -->
+<div class="page-header page-header-xs">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4><a href="/" class="btn-link"><i class="icon-arrow-left52 position-left"></i></a>
+                <span>{{ 'taskList' | translate }}</span>
+            </h4>
+
+            <ul class="breadcrumb breadcrumb-caret position-right">
+                <li><a href="/">{{ 'breadcrumbHome' | translate }}</a></li>
+                <li class="active">
+                    <span>{{ 'taskList' | translate }}</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="heading-elements">
+            <div class="heading-btn-group">
+                <button class="btn btn-link btn-float has-text text-size-small btnAdd" ng-click="openModal()">
+                    <i class="icon-plus2 text-indigo-400"></i><span>{{ 'btnAdd' | translate }}</span>
+                </button>
+
+                <button class="btn btn-link btn-float has-text text-size-small btnRefresh" ng-click="onRefresh()">
+                    <i class="icon-sync text-indigo-400"></i><span>{{ 'btnRefresh' | translate }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->

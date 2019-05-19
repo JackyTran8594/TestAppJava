@@ -1,0 +1,106 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="$ctrl.cancel()"
+        aria-hidden="true">&times;</button>
+
+</div>
+<div class="modal-body">
+    <div class="">
+
+        <div id="screenshot" style="text-align:center;">
+            <video class="videostream" autoplay=""></video>
+            <img style="display:none;" id="screenshot-img">
+            <canvas style="display:none;"></canvas>
+            <!-- <p><button class="capture-button">Capture video</button></p> -->
+            <p><button id="screenshot-button" class="btn btn-default" ng-click="takeScreenshot()">{{'TakeScreenshot'|translate}}</button></p>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="pull-right">
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.save()">{{'btnSave'|translate}}</button>
+        <button type="button" class="btn btn-default" ng-click="$ctrl.cancel()"
+            data-dismiss="modal">{{'btnCancel'|translate}}</button>
+    </div>
+</div>
+
+
+<script>
+
+    const captureVideoButton =
+        document.querySelector('#screenshot .capture-button');
+    const screenshotButton = document.querySelector('#screenshot-button');
+    const img = document.querySelector('#screenshot img');
+    const video = document.querySelector('#screenshot video');
+
+    const canvas = document.createElement('canvas');
+
+    const hdConstraints = {
+        video: {
+            width: { min: 1280 },
+            height: { min: 720 },
+            facingMode: 'environment'
+        },
+        audio: false
+    };
+
+    navigator.mediaDevices.getUserMedia(hdConstraints).
+        then((stream) => { video.srcObject = stream }).catch(err => {
+            console.log(err);
+        });
+
+    const vgaConstraints = {
+        video: {
+            width: { exact: 640 },
+            height: { exact: 480 },
+            facingMode: 'environment'
+        },
+        audio: false
+    };
+
+    const tabletConstraints = {
+        video: {
+            width: { min: 640 },
+            height: { min: 480 },
+            facingMode: 'environment'
+        },
+        audio: false
+    }
+
+    navigator.mediaDevices.getUserMedia(tabletConstraints).then((stream) => { video.srcObject = stream }).catch(err => {
+        console.log(err);
+    })
+
+    navigator.mediaDevices.getUserMedia(vgaConstraints).
+        then((stream) => { video.srcObject = stream }).catch(err => {
+            console.log(err);
+        });
+
+    const videoConstraints = {
+        facingMode: 'environment'
+    }
+
+    //const constraints = {
+    //    video: videoConstraints,
+    //    audio: false
+    //}
+
+    //captureVideoButton.onclick = function () {
+    //  navigator.mediaDevices.getUserMedia(constraints).
+    //      then(handleSuccess).catch(handleError);
+    //};
+
+    screenshotButton.onclick = video.onclick = function () {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        // Other browsers will fall back to image/png
+        img.src = canvas.toDataURL('image/webp');
+        console.log(canvas);
+        console.log(img);
+    };
+
+    function handleSuccess(stream) {
+        //screenshotButton.disabled = false;
+        video.srcObject = stream;
+    }
+</script>

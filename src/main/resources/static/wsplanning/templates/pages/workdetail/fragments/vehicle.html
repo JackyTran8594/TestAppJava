@@ -1,0 +1,55 @@
+<!-- Basic panel controls -->
+<div class="panel panel-white" ng-controller="VehicleCtrl">
+    <span ng-show="!isShow">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <a class="btn btn-link btn-float has-text text-size-small" ng-click="$ctrl.openSearchVehicle('full','')" style="float: left;">
+                    <i class="icon-truck position-left myTitle"></i>
+                </a>
+                <small class="myTitle" style="margin-left: 0px;">
+                    {{WOVehicle.LicenseNo}}, {{WOVehicle.VIN}}, {{WOVehicle.Make}}, {{WOVehicle.Model}}, {{WOVehicle.SubModel}}<br>
+                    {{WOVehicle.HolderCustomer.CustNo}}, {{WOVehicle.HolderCustomer.LName}} {{WOVehicle.HolderCustomer.FName}}
+                </small>
+            </h6>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li ng-click="toogleVehicle()"><a ng-class="{'rotate-180': isShow == true}" data-action="collapse" data-popup="tooltip" title="Collapse"></a></li>
+                </ul>
+            </div>
+        </div>
+    </span>
+
+    <span ng-show="isShow">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <a class="btn btn-link btn-float has-text text-size-small" ng-click="$ctrl.openSearchVehicle('full','')" style="float: left;">
+                    <i class="icon-truck position-left myTitle"></i>
+                </a>
+                <small class="myTitle" style="margin-left: 0px;">
+                    {{WOVehicle.LicenseNo}}, {{WOVehicle.VIN}}, {{WOVehicle.Make}}, {{WOVehicle.Model}}, {{WOVehicle.SubModel}}<br>
+                    {{WOVehicle.HolderCustomer.CustNo}}, {{WOVehicle.HolderCustomer.LName}} {{WOVehicle.HolderCustomer.FName}}
+                </small>
+            </h6>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li ng-click="toogleVehicle()"><a ng-class="{'rotate-180': isShow == true}" data-action="collapse" data-popup="tooltip" title="Collapse"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <form class="form-horizontal formValidate" name="contractFrm">
+                <div ng-repeat="item in WOVehicle.DynamicDataFields" class="col-xs-6">
+                    <div class="form-group">
+                        <label class="control-label col-xs-4">{{ item.Label }}</label>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" id="label_vehicle_{{$index}}"  ng-model="item.Value" ng-disabled="true">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </span>
+</div>
+<!-- /basic panel controls -->

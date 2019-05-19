@@ -1,0 +1,86 @@
+<!--ROW3-->
+<div class="panel panel-flat">
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive nowhitespace">
+                    <table class="table table-bordered tablePlanning">
+                        <!--BODY-->
+                        <tbody>
+                        <tr>
+                            <td ng-repeat="item in lstPlanning" class="tdBooking text-center"
+                                sh-context-menu menu-options="menuOptions" context-data="item"
+                                onclick="clickBooking(this)" ng-dblclick="detailBooking(item)"
+                                ng-click="detailBooking(item)">
+                                <div class="tablea" style="min-width: 130px;">
+                                    <div class="tr text-center">{{item.WorkDay | dateFormat}}</div>
+                                    <div class="tr text-center">
+                                        <div class="c100 p{{100 - item.FreeCapacity}} center">
+                                            <span ng-show="item.FreeHour !== 0">{{100 - item.FreeCapacity}}%</span>
+                                            <span ng-show="item.FreeHour === 0">100%</span>
+                                            <div class="slice">
+                                                <div class="bar"></div>
+                                                <div class="fill"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tr text-center">
+                                        <!--<div style="width: 33%;float: left;" class="tr text-left">{{item.WoResourcePoolDuration}}</div>-->
+                                        <div style="width: 50%;float: left;color:red;font-weight: bold;" class="tr text-left">{{(item.BookedResourcesDuration / 60) | number:2}}</div>
+                                        <div style="width: 50%;float: left;" class="tr text-right">{{item.FreeHour}}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center" style="font-weight: bold;">
+                                {{ 'workload' | translate }}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    .tablePlanning tbody tr td {
+        padding: 5px;
+    }
+
+    .tablePlanning tbody tr td:not(:last-child):hover {
+        border-top: 2px solid orangered;
+    }
+
+    .bookingActive {
+        border-top: 2px solid red !important;
+    }
+
+    .nowhitespace tbody tr td {
+        white-space: normal !important;
+    }
+
+    .tablea {
+        display: table;
+    }
+
+    .tr {
+        display: table-row;
+    }
+
+    .td {
+        display: table-cell;
+    }
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+  });
+
+  function clickBooking(item) {
+    $(".tdBooking").removeClass("bookingActive");
+    $(item).addClass("bookingActive");
+  }
+
+</script>

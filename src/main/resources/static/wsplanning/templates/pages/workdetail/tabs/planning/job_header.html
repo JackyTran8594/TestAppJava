@@ -1,0 +1,283 @@
+<div class="row row-eq-height">
+    <div class="panel panel-flat" style="width: 100%;">
+        <div class="panel-body" style="padding: 0 20px;">
+            <div class="col-xs-8" style="height: 100%;">
+                <!--ROW1-->
+                <div class="row row-eq-height" style="max-height: 100%;">
+                    <div class="col-xs-8 col-md-10 border"
+                         style="max-height: 37vh;overflow-y: scroll;">
+                        <div ng-repeat="item in jobTabList">
+                            <div>
+                                <div class="col-xs-10 pull-left">
+                                    <h4>{{item.Note}}</h4>
+                                    <span>
+                                        <ul>
+                                            <li>{{item.Complaint}}</li>
+                                        </ul>
+                                    </span>
+                                </div>
+                                <div class="col-xs-2 pull-right">
+                                    <h4>{{item.EstimatedTime}}</h4>
+                                </div>
+                            </div>
+                            <br/>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 col-md-2 text-center border" style="padding: 30px;">
+                        <h5>E: {{(totalHours) | number:2}}</h5>
+                        <h5 style="color: red;">P: {{(totalDurationPool) | number:2}}</h5>
+                        <h5 style="color: #0A4DB7;">B: {{(totalDurationBooking/ 60) | number:2}}</h5>
+                    </div>
+                </div>
+
+                <hr/>
+                <div class="row" style="max-height: 20%;">
+                    <!--DeptId-->
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">{{ 'department' | translate }}</label>
+                            <div class="col-xs-8">
+                                <select class="form-control" ng-model="DeptId" ng-change="changeDeptId(this)"
+                                        ng-options="item.Id as item.Name for item in lstDepartmentSearch" convert-to-number>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">{{ 'shiftId' | translate }}</label>
+                            <div class="col-xs-8">
+                                <select class="form-control" ng-model="ShiftId" ng-change="changeShiftId(this)"
+                                        ng-options="item.Id as item.Name for item in lstShiftSearch" convert-to-number>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-4">
+                <div class="clear">
+                    <div class="col-xs-12 text-center">
+                        <div class="btn-group">
+                            <button
+                                    class="btn btn-primary"
+                                    mwl-date-modifier
+                                    date="viewDate"
+                                    decrement="calendarView" ng-click="previousMonth()">
+                                {{ 'previous' | translate }}
+                            </button>
+                            <button
+                                    class="btn btn-default"
+                                    mwl-date-modifier
+                                    date="viewDate"
+                                    set-to-today ng-click="today()">
+                                {{ 'today' | translate }}
+                            </button>
+                            <button
+                                    class="btn btn-primary"
+                                    mwl-date-modifier
+                                    date="viewDate"
+                                    increment="calendarView" ng-click="nextMonth()">
+                                {{ 'next' | translate }}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 text-center" style="display: none;">
+                        <div class="btn-group">
+                            <button
+                                    class="btn btn-primary" ng-click="previous()">
+                                Previous
+                            </button>
+                            <button
+                                    class="btn btn-default" ng-click="today()">
+                                Today
+                            </button>
+                            <button
+                                    class="btn btn-primary"  ng-click="next()">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-center">{{ calendarTitle }}</h2>
+
+                    <mwl-calendar
+                            events="events"
+                            view="calendarView"
+                            view-title="calendarTitle"
+                            view-date="viewDate"
+                            current-day="viewDate"
+                            cell-modifier="cellModifier(calendarCell)"
+                            on-view-change-click="false"
+                            custom-template-urls="{calendarMonthCell: 'customMonthCell.html'}"
+                            on-timespan-click="timespanClicked(calendarDate, calendarCell)">
+                    </mwl-calendar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script id="customMonthCell.html" type="text/ng-template">
+    <div
+            ng-click="vm.dayClicked(day, true, $event)" id="{{day.id}}"
+            class="cal-month-day {{ day.cssClass }} day_{{day.label}}"
+            ng-class="{
+    'cal-day-outmonth': !day.inMonth,
+    'cal-day-inmonth': day.inMonth,
+    'cal-day-weekend': day.isWeekend,
+    'cal-day-past': day.isPast,
+    'cal-day-today': day.isToday,
+    'cal-day-future': day.isFuture,
+    'cal-day-selected': vm.selectedDate.getDate() == day.label
+  }">
+
+        <span
+                class="calendar-month"
+                data-cal-date
+                ng-click="vm.calendarCtrl.dateClicked(day.date)"
+                ng-bind="day.label">
+        </span>
+
+
+        <div class="events-list center" ng-show="day.events.length > 0">
+            <a
+                    href="javascript:;"
+                    class="pull-left event"
+                    ng-style="{backgroundColor: '#dedbcd'}"
+                    tooltip-append-to-body="true">
+            </a>
+        </div>
+
+
+        <div class="cal-week-box-cell" ng-if="$first && rowHovered">
+            <span>{{vm.getWeekNumberLabel(day)}}</span>
+        </div>
+
+    </div>
+
+</script>
+
+<style type="text/css">
+    .free {
+        background-color: white;
+    }
+
+    .booked {
+        background-color: gray;
+    }
+
+    .cap75 {
+		<!-- background-color: #6b7988; -->
+         <!-- background-color: #f2f4f4; -->
+		 <!-- background-color: #acb2b7; -->
+		 background-color:white;
+     }
+
+    .cap50 {
+		background-color: #f2f4f4;
+        <!-- background-color: #acb2b7; -->
+    }
+
+    .cap25 {
+		background-color: #808b96;
+		<!-- background-color: #f2f4f4; -->
+        <!-- background-color: #6b7988; -->
+    }
+
+    @media only screen and (min-width: 768px) {
+        mwl-calendar .cal-month-box [class*=cal-cell], mwl-calendar .cal-year-box [class*=span] {
+            min-height: 30px;
+            position: relative;
+        }
+
+        mwl-calendar .cal-month-day {
+            height: 54px;
+        }
+
+        mwl-calendar .cal-month-box .cal-day-today span[data-cal-date] {
+            font-size: 1.5em;
+        }
+    }
+
+    /* For general iPad layouts */
+    @media only screen and (device-width: 768px) {
+        mwl-calendar .cal-month-box [class*=cal-cell], mwl-calendar .cal-year-box [class*=span] {
+            min-height: 21px;
+            position: relative;
+        }
+
+        mwl-calendar .cal-month-day {
+            height: 38px;
+        }
+
+        mwl-calendar .cal-month-box .cal-day-today span[data-cal-date] {
+            font-size: 0.9em;
+        }
+    }
+
+    @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
+        /* For portrait layouts only */
+        mwl-calendar .cal-month-box [class*=cal-cell], mwl-calendar .cal-year-box [class*=span] {
+            min-height: 21px;
+            position: relative;
+        }
+
+        mwl-calendar .cal-month-day {
+            height: 38px;
+        }
+
+        mwl-calendar .cal-month-box .cal-day-today span[data-cal-date] {
+            font-size: 0.9em;
+        }
+    }
+
+    @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: landscape) {
+        /* For landscape layouts only */
+        mwl-calendar .cal-month-box [class*=cal-cell], mwl-calendar .cal-year-box [class*=span] {
+            min-height: 21px;
+            position: relative;
+        }
+
+        mwl-calendar .cal-month-day {
+            height: 38px;
+        }
+
+        mwl-calendar .cal-month-box .cal-day-today span[data-cal-date] {
+            font-size: 0.9em;
+        }
+    }
+
+    .border {
+        border: 1px solid transparent;
+        border-radius: 3px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+    }
+
+    .equal {
+        display: flex;
+        display: -webkit-flex;
+        flex-wrap: wrap;
+    }
+
+    .row-eq-height {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+    .cal-day-selected {
+        background-color: #e4d4d4;
+    }
+
+    mwl-calendar .cal-slide-content{
+        display: none;
+    }
+</style>

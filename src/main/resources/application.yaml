@@ -1,0 +1,37 @@
+server:
+  #port: 8081
+  port: 8443
+  session:
+    timeout: 2592000 # Session timeout in seconds.
+  ssl:
+      key-store-type: PKCS12
+#      # The path to the keystore containing the certificate
+#      # The password used to generate the certificate
+      key-store: classpath:keystore.p12
+      # key-store: /root/tomcat-8.5.37/external-conf/keystore.p12
+      key-store-password: amaster123
+      # The alias mapped to the certificate
+      key-alias: tomcat
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.session.SessionAutoConfiguration
+  thymeleaf:
+    cache: false
+#  redis:
+#    host: master-ump-server
+#    port: 6379
+#    password: ump@2018 206.189.41.190
+  http:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+  messages:
+      basename: messages/messages
+      cache-seconds: -1
+      encoding: UTF-8
+apiEndpointUrl: http://automaster.alliedsoft.hu:9092
+
+# Tell Spring Security (if used) to require requests over HTTPS
+security:
+  require-ssl: true
+

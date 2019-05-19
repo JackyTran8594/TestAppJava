@@ -1,0 +1,126 @@
+<link href="/sign.css" rel="stylesheet" type="text/css">
+<!-- Page container -->
+<div class="page-container" ng-controller="CheckInCtrl">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Panel content -->
+            <div class="panel panel-flat" style="margin-bottom: 0px;">
+                <div class="panel-heading">
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-6" id="checkinTemplate">
+                            <div class="form-group">
+                                <label class="control-label col-xs-4">{{ 'checkinTemplate' | translate }}</label>
+                                <div class="col-xs-8">
+                                    <div class="input-group">
+                                        <select ui-select2 ng-model="templateSelected" ng-required="true" ng-change="changeTemplate()"
+                                                ng-options="item as item.Name for item in lstTemplate">
+                                        </select>
+                                        <span class="input-group-btn">
+                                            <button colorpicker ng-model="color" type="button" class="btn btn-default">
+                                                <i class="icon-eyedropper"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="clear: both;">
+                                <label class="control-label col-xs-4">{{ 'checkinMileage' | translate }}</label>
+                                <div class="col-xs-8">
+                                    <input type="number" class="form-control" ng-model="data.Mileage">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-xs-4">{{ 'checkinRemark' | translate }}</label>
+                                <div class="col-xs-8">
+                                    <div class="input-group">
+                                        <textarea type="text" class="form-control" ng-model="data.Remark"></textarea>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openImage()">
+                                                <i class="icon-camera"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-8 col-xs-offset-4">
+                                    <textarea ng-disabled="true" type="text" class="form-control" ng-model="data.legalText"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-xs-6">
+                            <signature-pad id="template-canvas" accept="acceptTemplate" clear="clear" height="250"
+                                           width="465" color="{{color}}"
+                                           dataurl="imgTemplate"></signature-pad>
+                        </div>
+
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <div class="col-xs-8 col-xs-offset-4">
+                                    <div class="container"
+                                         ng-style="{'max-width': boundingBox.width + 'px', 'max-height': boundingBox.height + 'px'}">
+                                        <signature-pad id="signature-canvas" accept="accept" clear="clear" color="#0000FF"
+                                                       height="{{boundingBox.height - 20 }}" width="{{boundingBox.width - 30}}"
+                                                       dataurl="dataurl"></signature-pad>
+
+
+                                        <div class="sizes">
+                                            <input type="text" ng-model="boundingBox.width"> x <input type="text"
+                                                                                                      ng-model="boundingBox.height">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<!--                    <div class="row" ng-show="templateDraw">-->
+<!--                        <img ng-src="{{ templateDraw.dataUrl }}">-->
+<!--                    </div>-->
+
+                </div>
+
+                <button id="btnUpdateColor" style="display: none;" ng-click="templateDraw = acceptTemplate();"></button>
+                <div class="panel-footer">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-icon btn-primary btnSubmit"
+                                ng-click="signature = accept();templateDraw = acceptTemplate();onSubmitForm()">
+                            <i class="icon-checkmark3"></i>{{ 'btnSave' | translate }}</span>
+                        </button>
+                        <button type="button" class="btn btn-link" data-ng-click="onCancel()">{{ 'btnCancel' |
+                            translate}}
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /main content -->
+
+
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+//    console.log($("#checkinTemplate").width());
+//    $("#template-canvas_ctn").width($("#checkinTemplate").width());
+//    console.log($("#template-canvas_ctn").width());
+  });
+</script>

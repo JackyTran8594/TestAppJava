@@ -1,0 +1,161 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$ctrl.cancel()">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only" ng-click="$ctrl.cancel()">Close</span>
+    </button>
+    <h4>{{title}}</h4>
+</div>
+
+<div class="modal-body">
+
+    <div ng-hide="hide !== 8">
+        <div class="well well-sm">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="form-control firstFocus" ng-model="strItem">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="panel panel-flat">
+                    <div class="panel-body">
+                        <div class="well border-left-danger border-left-lg jobnew">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="panel panel-flat">
+                                                <div class="panel-heading">
+                                                    <h5 class="panel-title" ng-hide="jobChecked.MainGroup == ''"><span
+                                                            style="color: red">{{jobChecked.MainGroup}}/{{jobChecked.SubGroup}}</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="div-tree">
+                                                        <ul class="tree-level"
+                                                            ng-repeat="item in textTreeList track by $index">
+                                                            <li>
+                                                                <a
+                                                                    ng-click="collapseMenu(item)"><span>{{item.label}}</span></a>
+                                                                <ul ng-show="item.selected == true" class=""
+                                                                    ng-repeat="sub in item.SubGroups as listSub">
+                                                                    <li class="">
+                                                                        <a ng-click="addTextLine(sub, item.label)">
+                                                                            <span>{{sub.Name}}</span></a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-hide="hide === 8">
+        <!--SEARCH-->
+        <div class="well well-sm">
+            <form class="form-horizontal form-search row" ng-submit="doSearch()">
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control firstFocus" ng-model="skey"
+                                placeholder="{{ 'search' | translate }}" code="13">
+                        </div>
+                    </div>
+
+                    <div class="col-md-1 col-sm-1 col-xs-1">
+                        <button type="submit" ng-click="doSearch()" class="btn btn-icon btn-default"><i
+                                class="icon-search4"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--SEARCH-->
+        <div class="panel panel-flat">
+            <div class="table-responsive tableModal">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">{{ 'ItemNo' | translate }}</th>
+                            <th class="text-center">{{ 'Name' | translate }}</th>
+                            <th class="text-center">{{ 'Quantity' | translate }}</th>
+
+                            <th class="text-center">{{ 'Action' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lstData track by $index">
+                            <td class="text-center">{{item.ItemNo}}</td>
+                            <td class="text-left text-wrap">{{item.Name}}</td>
+
+                            <td><input type="number" class="form-control text-center" ng-model="item.Quantity"></td>
+
+                            <td class="text-center"><input type="checkbox" ng-click="isChecked(item, checked)"
+                                    ng-model="checked" />
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="panel-footer text-right" style="padding-right: 25px;">
+
+                <!-- Paging elements -->
+                <form class="form-inline formPaging formValidate">
+                    <div class="form-group">
+                        {{totalElements | number}} <span class="text-lowercase">{{ 'item' | translate }}</span>
+                    </div>
+                    <div class="form-group" style="border-left: 1px solid #ddd">
+                        <ul class="pagination-flat pagination-rounded" uib-pagination total-items="totalElements"
+                            items-per-page="limit" max-size="2" ng-model="page" boundary-links="true"
+                            boundary-link-numbers="true" force-ellipses="true" rotate="true" previous-text="&lsaquo;"
+                            next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="page" ng-model="pageGo" placeholder="{{ 'page' | translate }}"
+                            class="form-control validatePositiveInteger" min="1"
+                            max="{{(totalElements / limit) | ceil}}" style="width: 55px">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">{{ 'go' | translate }}</button>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" ng-model="limit" ng-change="changeLimit()" convert-to-number>
+                            <option value="1">1</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                        </select>
+                        <span>{{ 'limit' | translate }}</span>
+                    </div>
+                </form>
+                <!-- /paging element -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="modal-footer position-right">
+    <a class="btn btn-primary"
+        ng-click="$ctrl.save()">{{ 'btnSave' | translate }}</a>
+    <a class="btn btn-primary" ng-click="$ctrl.cancel()">{{ 'btnCancel' | translate }}</a>
+</div>

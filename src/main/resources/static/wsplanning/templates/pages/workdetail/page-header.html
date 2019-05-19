@@ -1,0 +1,54 @@
+<!-- Page header -->
+<div class="page-header page-header-xs">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4><a href="/" class="btn-link"><i class="icon-arrow-left52 position-left"></i></a>
+                <span class="text-semibold">{{ 'breadcrumbWorkDetail' | translate }}</span></h4>
+
+            <ul class="breadcrumb breadcrumb-caret position-right">
+                <li><a href="/">{{ 'breadcrumbHome' | translate }}</a></li>
+                <li ng-if="type == 'allWO'"><a ui-sref="app.main.allwork()">{{ 'breadcrumbWorkOrder' | translate }}</a></li>
+                <li ng-if="type == 'todayWO'"><a ui-sref="app.main.todaywork()">{{ 'breadcrumbTodayWork' | translate }}</a></li>
+                <li ng-if="type == 'offers'"><a ui-sref="app.main.offer()">{{ 'breadcrumbOffer' | translate }}</a></li>
+                <li ng-if="type == 'postponedWO'"><a ui-sref="app.main.postponedwork()">{{ 'breadcrumbPostponedWO' | translate }}</a></li>
+                <li ng-if="type == 'unScheduledWO'"><a ui-sref="app.main.unscheduledwork()">{{ 'breadcrumbUnScheduledWO' | translate }}</a></li>
+                <li ng-if="type == 'withBO'"><a ui-sref="app.main.workbo()">{{ 'breadcrumbWithBO' | translate }}</a></li>
+                <li ng-if="type == 'withMOT'"><a ui-sref="app.main.workmot()">{{ 'breadcrumbWithMOT' | translate }}</a></li>
+                <li ng-if="type == 'withSubcontractor'"><a ui-sref="app.main.worksub()">{{ 'breadcrumbWithSubcontractor' | translate }}</a></li>
+                <li ng-if="type == 'withTire'"><a ui-sref="app.main.worktire()">{{ 'breadcrumbWithTire' | translate }}</a></li>
+                <li ng-if="isNew == 'wo'" class="active">{{ 'breadcrumbWorkNew' | translate }}</li>
+				<li ng-if="isNew == 'offer'" class="active">{{ 'breadcrumbNewOffer' | translate }}</li>
+				<li ng-if="isNew == 'booking'" class="active">{{ 'breadcrumbNewBooking' | translate }}</li>
+                <!-- <li ng-if="!isNew" class="active">{{ 'breadcrumbWorkDetail' | translate }}</li> -->
+                <li ng-if="!isNew" class="active">{{workOrderNo}}</li>
+            </ul>
+        </div>
+
+
+        <div class="heading-elements">
+            <div class="heading-btn-group">
+                <button type="button" ng-show="tabActive == 'header'" ng-disabled="pristine == false && headerFrm.modified == false"
+                        id="btnSubmitFrm" class="btn btn-icon btn-primary btnSubmit" ng-click="saveForm(tabActive)">
+                    <i class="icon-checkmark3"></i>{{ 'btnSave' | translate }}</span>
+                </button>
+
+                <button type="button" ng-show="tabActive == 'job'"
+                        class="btn btn-icon btn-primary btnSubmit" ng-click="saveForm(tabActive)">
+                    <i class="icon-checkmark3"></i>{{ 'btnSave' | translate }}</span>
+                </button>
+
+                <button type="button" ng-show="tabActive == 'planning'"
+                        class="btn btn-icon btn-primary btnSubmit" id="thuyetlv" ng-click="saveForm(tabActive)">
+                    <i class="icon-checkmark3"></i>{{ 'btnSave' | translate }}</span>
+                </button>
+
+                <button type="button" ng-show="tabActive == 'checkin'"
+                        class="btn btn-icon btn-primary btnSubmit" ng-click="saveForm(tabActive)">
+                    <i class="icon-checkmark3"></i>{{ 'btnSave' | translate }}</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- /page header -->
